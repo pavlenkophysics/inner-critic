@@ -63,15 +63,18 @@ h3 { font-size: clamp(1.1rem, 2.2vw, 1.35rem); font-weight: 600; color: var(--ac
 
 p { font-size: 1.05rem; }
 
-a { color: var(--accent); text-decoration: none; transition: color 0.3s; }
-a:hover { color: var(--gold); }
+a { color: var(--accent); text-decoration: underline; text-decoration-color: var(--accent-soft); text-underline-offset: 3px; transition: color 0.3s, text-decoration-color 0.3s; }
+a:hover { color: var(--accent-hover); text-decoration-color: var(--accent-hover); }
 
 img { max-width: 100%; height: auto; display: block; }
 
-.self-label { color: var(--self-color); font-weight: 600; }
+.self-label {
+  font-weight: 700;
+  color: var(--accent-hover);
+  border-bottom: 2px solid var(--accent-2);
+}
 .hero-section .self-label,
-.cta-section .self-label { color: var(--accent-2); }
-.safe-space .self-label { color: var(--self-color-accent); }
+.cta-section .self-label { color: var(--accent-2); border-bottom-color: rgba(232, 232, 88, 0.4); }
 
 /* ═══════════════════════════════════════════
    ANIMATIONS
@@ -167,7 +170,7 @@ img { max-width: 100%; height: auto; display: block; }
   border-radius: 50px;
   border: none; cursor: pointer;
   transition: all 0.3s ease;
-  text-decoration: none;
+  text-decoration: none !important;
 }
 .cta-primary:hover {
   background: var(--accent); color: #fff;
@@ -185,7 +188,7 @@ img { max-width: 100%; height: auto; display: block; }
   border-radius: 50px;
   border: none; cursor: pointer;
   transition: all 0.3s ease;
-  text-decoration: none;
+  text-decoration: none !important;
   box-shadow: 0 4px 16px rgba(232, 232, 88, 0.25);
 }
 .cta-gold:hover {
@@ -346,9 +349,9 @@ img { max-width: 100%; height: auto; display: block; }
    FOR WHOM
    ═══════════════════════════════════════════ */
 .audience-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
   margin-top: 32px;
 }
 .audience-card {
@@ -489,14 +492,17 @@ img { max-width: 100%; height: auto; display: block; }
 }
 
 .program-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  flex-direction: column;
   gap: 20px;
   margin-bottom: 32px;
 }
 .program-card {
   position: relative;
   padding-top: 36px;
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
 }
 .program-card .week-label {
   position: absolute;
@@ -510,6 +516,7 @@ img { max-width: 100%; height: auto; display: block; }
   padding: 4px 14px;
   border-radius: 0 0 10px 10px;
 }
+.program-card-text { flex: 1; min-width: 0; }
 .program-card h3 { margin-bottom: 10px; }
 .program-card p { font-size: 0.95rem; color: var(--muted); line-height: 1.6; }
 
@@ -640,14 +647,14 @@ img { max-width: 100%; height: auto; display: block; }
 
 /* Program card images */
 .program-card-img {
-  width: 100%;
+  flex-shrink: 0;
+  width: 140px;
   border-radius: 12px;
   overflow: hidden;
-  margin-bottom: 16px;
 }
 .program-card-img img {
   width: 100%;
-  height: 160px;
+  height: 120px;
   object-fit: cover;
   object-position: center 45%;
   display: block;
@@ -764,7 +771,7 @@ img { max-width: 100%; height: auto; display: block; }
   border: 1px solid var(--border);
   background: rgba(13, 92, 99, 0.04);
   color: var(--accent);
-  text-decoration: none;
+  text-decoration: none !important;
   font-size: 0.84rem;
   font-weight: 500;
   transition: background 0.2s ease, border-color 0.2s ease;
@@ -784,6 +791,68 @@ img { max-width: 100%; height: auto; display: block; }
 }
 
 /* ═══════════════════════════════════════════
+   TOGGLE / ACCORDION
+   ═══════════════════════════════════════════ */
+.toggle-section { margin-top: 32px; }
+.toggle-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 20px 28px;
+  background: var(--card-bg);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  cursor: pointer;
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--bg-dark);
+  transition: all 0.3s ease;
+  text-align: left;
+  text-decoration: none !important;
+}
+.toggle-trigger:hover { box-shadow: 0 4px 16px rgba(26, 58, 74, 0.1); }
+.toggle-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px; height: 36px;
+  min-width: 36px;
+  background: var(--bg-dark);
+  color: #fff;
+  font-size: 0.9rem;
+  border-radius: 50%;
+  transition: transform 0.4s ease, background 0.3s ease;
+  flex-shrink: 0;
+  margin-left: 16px;
+}
+.toggle-trigger:hover .toggle-arrow { background: var(--accent); }
+.toggle-trigger.open .toggle-arrow { transform: rotate(180deg); background: var(--accent-2); color: var(--text); }
+.toggle-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease;
+}
+.toggle-content.open { max-height: 3000px; }
+.toggle-inner { padding: 16px 0; }
+.ifs-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.ifs-card { text-align: left; border-left: 4px solid var(--accent); }
+.ifs-card h3 { margin-bottom: 12px; }
+.ifs-card p { font-size: 0.95rem; }
+.ifs-card:hover { border-left-color: var(--accent-2); }
+.ifs-card.ifs-evolving {
+  border-left-color: var(--accent-2);
+  background: linear-gradient(135deg, rgba(254, 252, 232, 0.5), var(--card-bg));
+}
+.ifs-card.ifs-evolving:hover { border-left-color: var(--accent); }
+
+/* ═══════════════════════════════════════════
    RESPONSIVE
    ═══════════════════════════════════════════ */
 @media (max-width: 768px) {
@@ -795,8 +864,9 @@ img { max-width: 100%; height: auto; display: block; }
   .hero-card { padding: 28px 20px; }
   .nav-dots { right: 10px; gap: 8px; }
   .nav-dot { width: 8px; height: 8px; }
-  .audience-grid { grid-template-columns: 1fr; }
-  .program-grid { grid-template-columns: 1fr; }
+  .program-card { flex-direction: column; }
+  .program-card-img { width: 100%; }
+  .toggle-trigger { font-size: 1rem; padding: 16px 20px; }
   .author-photo { width: 160px; height: 160px; }
   .section { padding: 56px 20px; }
 }
@@ -848,24 +918,24 @@ img { max-width: 100%; height: auto; display: block; }
   <div class="section-inner">
     <div class="section-divider animate-in"></div>
     <h2 class="animate-in delay-1" style="text-align:center;">Для кого эта группа</h2>
-    <div class="audience-grid" style="max-width:900px;margin-left:auto;margin-right:auto;">
+    <div class="audience-grid">
       <div class="glass-card audience-card animate-in delay-2">
         <div class="audience-icon">
           <svg viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9z"/><path d="M12 8v4l3 3"/></svg>
         </div>
-        <p>Утром ещё ничего не случилось, а внутренний голос уже нашёл, к чему придраться.</p>
+        <p>Внутренний достигатор гонит вперёд: «мало стараешься», «другие уже давно справились». Ты вроде бы много делаешь — а ощущение, что всё равно недостаточно.</p>
       </div>
       <div class="glass-card audience-card animate-in delay-3">
         <div class="audience-icon">
           <svg viewBox="0 0 24 24"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
         </div>
-        <p>Бывает, что всё прошло хорошо, но в голове крутится «можно было лучше» — по кругу.</p>
+        <p>Внутренний перфекционист перепроверяет каждую мелочь. Бывает, что всё прошло хорошо, но в голове крутится «можно было лучше» — по кругу.</p>
       </div>
       <div class="glass-card audience-card animate-in delay-4">
         <div class="audience-icon">
           <svg viewBox="0 0 24 24"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
         </div>
-        <p>Читали про IFS, слышали про части — откликается, и хочется попробовать на практике.</p>
+        <p>Читали про IFS (Internal Family Systems), слышали про части — откликается, и хочется попробовать на практике.</p>
       </div>
       <div class="glass-card audience-card animate-in delay-5">
         <div class="audience-icon">
@@ -921,26 +991,34 @@ img { max-width: 100%; height: auto; display: block; }
       <div class="glass-card program-card animate-in delay-2">
         <div class="week-label">Встреча 1</div>
         <div class="program-card-img"><img src="images/critic-10.png" alt="Встреча с частями"></div>
-        <h3>Концепция: IFS, части, <span class="self-label">Self</span>, критик</h3>
-        <p>Как устроена внутренняя система. Почему у критика есть благое намерение — и как одно это часто меняет сам взгляд на него.</p>
+        <div class="program-card-text">
+          <h3>Концепция: IFS, части, <span class="self-label">Self</span>, критик</h3>
+          <p>Как устроена внутренняя система. Почему у критика есть благое намерение — и как одно это часто меняет сам взгляд на него.</p>
+        </div>
       </div>
       <div class="glass-card program-card animate-in delay-3">
         <div class="week-label">Встреча 2</div>
         <div class="program-card-img"><img src="images/critic-12.png" alt="Знакомство с критиком"></div>
-        <h3>Знакомство со своим критиком</h3>
-        <p>Узнаем его мотивы, историю и чего он на самом деле хочет для нас. Познакомишься с частями, которые обычно рядом с ним.</p>
+        <div class="program-card-text">
+          <h3>Знакомство со своим критиком</h3>
+          <p>Узнаем его мотивы, историю и чего он на самом деле хочет для нас. Познакомишься с частями, которые обычно рядом с ним.</p>
+        </div>
       </div>
       <div class="glass-card program-card animate-in delay-4">
         <div class="week-label">Встреча 3</div>
         <div class="program-card-img"><img src="images/critic-11.png" alt="Что скрывает критик"></div>
-        <h3>Что скрывает критик</h3>
-        <p>Под критиком часто обнаруживается уязвимая часть — изгнанник. Разбираемся, как к нему подойти и когда стоит обратиться к специалисту.</p>
+        <div class="program-card-text">
+          <h3>Что скрывает критик</h3>
+          <p>Под критиком часто обнаруживается уязвимая часть — изгнанник. Разбираемся, как к нему подойти и когда стоит обратиться к специалисту.</p>
+        </div>
       </div>
       <div class="glass-card program-card animate-in delay-5">
         <div class="week-label">Встреча 4</div>
         <div class="program-card-img"><img src="images/critic-9.png" alt="Интеграция"></div>
-        <h3>Инструменты и интеграция</h3>
-        <p>Собираем набор инструментов для самостоятельной практики. Интеграция совместного опыта и что брать дальше.</p>
+        <div class="program-card-text">
+          <h3>Инструменты и интеграция</h3>
+          <p>Собираем набор инструментов для самостоятельной практики. Интеграция совместного опыта и что брать дальше.</p>
+        </div>
       </div>
     </div>
 
@@ -1042,6 +1120,30 @@ img { max-width: 100%; height: auto; display: block; }
       <p style="color:var(--muted); margin-bottom: 16px;">Иногда кажется, что знаний о себе уже достаточно — а напряжение внутри остаётся. Я расскажу про подход, который помог мне выйти из этого цикла, и покажу, как он работает на практике.</p>
       <p style="font-size: 1.1rem; font-weight: 500; margin-bottom: 20px;">8 апреля · 10:00 GMT (12:00 Москва) · Zoom</p>
       <a href="critic-webinar.html" class="cta-primary">Регистрация и подробности</a>
+    </div>
+    <!-- Toggle: IFS простыми словами -->
+    <div class="toggle-section animate-in delay-3">
+      <button class="toggle-trigger" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open');">
+        Classic и Evolving IFS простыми словами
+        <span class="toggle-arrow">&#9660;</span>
+      </button>
+      <div class="toggle-content">
+        <div class="toggle-inner">
+          <div class="ifs-cards">
+            <div class="glass-card ifs-card">
+              <h3>Classic IFS</h3>
+              <p>В IFS (Internal Family Systems) паттерны, установки, внутренние голоса рассматриваются как части — с ними можно выстраивать отношения. У каждой части благое намерение, каждая по-своему защищает.</p>
+              <p style="margin-top: 12px;">В центре метода — <span class="self-label">Self</span>: состояние присутствия и принятия, из которого возможен контакт с частями. Метод помогает снять внутреннее напряжение и выстроить навык: замечать части, выстраивать с ними отношения, двигаться к большей целостности.</p>
+              <p style="margin-top: 12px;">Исследования показывают эффективность в работе с депрессией, тревогой, устойчивостью и самоотношением.</p>
+            </div>
+            <div class="glass-card ifs-card ifs-evolving">
+              <h3>Evolving IFS</h3>
+              <p>Это развитие классического IFS с фокусом на <strong>состоянии</strong>. Специальное внимание уделяют тому, в каком состоянии вы в контакте с собой и с частью, что происходит с телом, насколько безопасно и достаточно ли поддержки в моменте.</p>
+              <p style="margin-top: 12px;">Важно и то, что вы делаете, и то, <strong>в каком состоянии это происходит</strong>.</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
