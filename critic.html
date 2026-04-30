@@ -902,7 +902,7 @@ img { max-width: 100%; height: auto; display: block; }
         <img src="images/critic-10.png" alt="Встреча с частями">
       </div>
       <div class="hero-card animate-in delay-3">
-        <p class="hero-card-label">Старт 13 мая · по средам · 12:00 МСК · 1,5 часа · Zoom</p>
+        <p class="hero-card-label">Старт в июле 2026 · по средам · 12:00 МСК · 1,5 часа · Zoom</p>
         <p class="hero-card-price">180 €</p>
         <p class="hero-card-price-note">возможна оплата в рублях</p>
         <a href="#register" class="cta-gold">Записаться</a>
@@ -990,7 +990,7 @@ img { max-width: 100%; height: auto; display: block; }
     <div class="section-divider animate-in"></div>
     <h2 class="animate-in delay-1" style="text-align:center;">Формат и программа</h2>
 
-    <p class="animate-in delay-2" style="color:var(--muted); font-size:1.05rem; margin-bottom:28px; text-align:center;">Старт 13 мая · по средам 12:00 МСК · 4 встречи · 1,5 часа · Zoom</p>
+    <p class="animate-in delay-2" style="color:var(--muted); font-size:1.05rem; margin-bottom:28px; text-align:center;">Старт в июле 2026 · по средам · 12:00 МСК · 4 встречи · 1,5 часа · Zoom</p>
 
     <div class="program-grid">
       <div class="glass-card program-card animate-in delay-2">
@@ -1089,27 +1089,28 @@ img { max-width: 100%; height: auto; display: block; }
 <section id="register" class="section cta-section">
   <div class="section-inner" style="text-align: center;">
     <div class="section-divider animate-in" style="background: linear-gradient(90deg, rgba(255,255,255,0.3), var(--accent-2));"></div>
-    <h2 class="animate-in delay-1">Записаться</h2>
-    <p class="cta-details animate-in delay-2">Иногда достаточно просто познакомиться со своим критиком по-настоящему — и обнаружить, что он готов сотрудничать, когда к нему приходят с любопытством, а не с боем.</p>
-    <form name="critic-group" method="POST" action="/critic-success.html" data-netlify="true" class="reg-form animate-in delay-3">
+    <h2 class="animate-in delay-1">Сохранить место</h2>
+    <p class="cta-details animate-in delay-2">Старт группы — в июле 2026. Оставьте предзапись, чтобы не пропустить запуск и другие мероприятия.</p>
+    <form id="criticForm" name="critic-group" method="POST" action="/critic-success.html" data-netlify="true" class="reg-form animate-in delay-3">
       <input type="hidden" name="form-name" value="critic-group">
       <div class="form-field">
-        <label for="name">Имя</label>
-        <input type="text" id="name" name="name" required placeholder="Как вас зовут">
+        <label for="reg-name">Имя</label>
+        <input type="text" id="reg-name" name="name" required placeholder="Как вас зовут">
       </div>
       <div class="form-field">
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" required placeholder="На эту почту придёт подтверждение">
+        <label for="reg-email">Email</label>
+        <input type="email" id="reg-email" name="email" required placeholder="На эту почту придёт подтверждение">
       </div>
       <div class="form-field">
-        <label for="telegram">Telegram</label>
-        <input type="text" id="telegram" name="telegram" placeholder="@username">
+        <label for="reg-tg">Telegram</label>
+        <input type="text" id="reg-tg" name="telegram" placeholder="@username">
       </div>
       <div class="form-field">
-        <label for="note">Что привело или чего хочется от группы <span style="font-weight:400;color:rgba(255,255,255,0.4)">(по желанию)</span></label>
-        <textarea id="note" name="note" rows="3" placeholder="Можно коротко, можно подробно — как удобно"></textarea>
+        <label for="reg-note">Что привело или чего хочется от группы <span style="font-weight:400;color:rgba(255,255,255,0.4)">(по желанию)</span></label>
+        <textarea id="reg-note" name="note" rows="3" placeholder="Можно коротко, можно подробно — как удобно"></textarea>
       </div>
-      <button type="submit" class="cta-gold" style="width:100%;margin-top:8px;font-family:var(--sans);font-size:1.05rem;cursor:pointer;">Записаться</button>
+      <button type="submit" id="criticSubmitBtn" class="cta-gold" style="width:100%;margin-top:8px;font-family:var(--sans);font-size:1.05rem;cursor:pointer;">Предзапись</button>
+      <div id="criticFormStatus" style="text-align:center;font-size:.95rem;margin-top:16px;min-height:24px"></div>
     </form>
     <p class="animate-in delay-4" style="margin-top: 24px; font-size: 0.9rem; color: rgba(255,255,255,0.5);">
       Если есть вопросы — <a href="https://t.me/pavlenkophysics" target="_blank" rel="noopener" style="color: rgba(255,255,255,0.7);">напиши мне в Telegram</a>.
@@ -1118,18 +1119,11 @@ img { max-width: 100%; height: auto; display: block; }
 </section>
 
 <!-- ═══════════════════════════════════════════
-     БЕСПЛАТНЫЙ ВЕБИНАР
+     IFS простыми словами
      ═══════════════════════════════════════════ -->
 <section id="section-5" class="section">
   <div class="section-inner" style="text-align: center;">
     <div class="section-divider animate-in"></div>
-    <p class="section-subtitle animate-in delay-1" style="text-align:center;">Бесплатно</p>
-    <h2 class="animate-in delay-1" style="text-align:center;">Открытый вебинар: дорогой критик, нам надо поговорить</h2>
-    <div class="webinar-promo animate-in delay-2">
-      <p style="color:var(--muted); margin-bottom: 16px;">За неделю до старта группы расскажу, откуда берётся внутренний критик, чего он на самом деле хочет и что меняется, когда начинаешь с ним разговаривать. Покажу метод IFS в действии — на живой демонстрации.</p>
-      <p style="font-size: 1.1rem; font-weight: 500; margin-bottom: 20px;">6 мая · 12:00 МСК · Zoom</p>
-      <a href="critic-webinar.html" class="cta-primary">Регистрация и подробности</a>
-    </div>
     <!-- Toggle: IFS простыми словами -->
     <div class="toggle-section animate-in delay-3">
       <button class="toggle-trigger" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open');">
@@ -1230,6 +1224,49 @@ const sectionObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.3 });
 
 sections.forEach(sec => sectionObserver.observe(sec));
+
+/* ── Форма предзаписи на группу критика ── */
+const CRITIC_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz5VV16Ja1Qx3HtBick5zNnkzsDym-hELSJClLcwVnp2f7URawEVjgYLl9h3N-IgRKLUw/exec';
+
+const criticForm = document.getElementById('criticForm');
+const criticBtn = document.getElementById('criticSubmitBtn');
+const criticStatus = document.getElementById('criticFormStatus');
+
+if (criticForm) {
+  criticForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    criticBtn.disabled = true;
+    criticBtn.textContent = 'Отправляем...';
+    criticStatus.style.color = 'rgba(255,255,255,0.6)';
+    criticStatus.textContent = '';
+
+    const data = {
+      type: 'critic-group',
+      name: document.getElementById('reg-name').value.trim(),
+      email: document.getElementById('reg-email').value.trim(),
+      telegram: document.getElementById('reg-tg').value.trim(),
+      note: document.getElementById('reg-note').value.trim()
+    };
+
+    try {
+      await fetch(CRITIC_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(data)
+      });
+
+      setTimeout(() => {
+        window.location.href = '/critic-success.html';
+      }, 600);
+    } catch (err) {
+      criticStatus.style.color = '#e89090';
+      criticStatus.textContent = 'Что-то пошло не так. Напишите мне в Telegram.';
+      criticBtn.textContent = 'Предзапись';
+      criticBtn.disabled = false;
+    }
+  });
+}
 </script>
 
 </body>
